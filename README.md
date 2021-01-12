@@ -62,6 +62,11 @@ The `US_city_demographic` dimension table has been performed a roll-up operation
 6. [airport-codes_csv.csv](./airport-codes_csv.csv) This is a simple table of airport codes and corresponding cities. It comes from [here](https://datahub.io/core/airport-codes#data)
 5. [images](./images) folder that contains the images used in this file.
 
+### Instructions to run the project
+1. clone the github repository: `git clone https://github.com/Erickramirez/Data-Engineering-ETL-to-Model-the-Data.git`
+2. verify the Prerequisites
+3. Execute jupyter notebook `Capstone Project Template.ipynb` 
+
 ### Conclusion
 The data solution has been currently addressed using Spark because it allows us to scale up on larger amounts of data and work with different data formats (in this case, SAS, Parquet, and CSV files). We are handling more than three million records; however, it is not a problem to work on it locally (which was the current approach); if the data start to increase, a different approach will be needed, like using a cloud solution. some other scenarios have been considered: 
 
