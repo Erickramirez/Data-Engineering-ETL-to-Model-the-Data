@@ -55,7 +55,7 @@ The `country` dimension table contains global temperature by country; it is also
 The `US_city_demographic` dimension table has been performed a roll-up operation to get the race data and obtain the data at the city level (using state_code and city as table keys). We can even perform another roll-up (state level) to check the data against the immigration fact on this table.  The data dictionary has detailed information about each column
 (check the file `Capstone Project Template.ipynb`).
 
-#### Tools and Technologies
+### Tools and Technologies
 The data solution has been currently addressed using the following tools and Technologies:
 - **Apache spark**  allows us to scale up on larger amounts of data and work with different data formats 
 (in this case, SAS, Parquet, and CSV files). It also allows abstract the data access complexity and has flexibility on data manipulation as data frames and Spark SQL (both used during the project).
