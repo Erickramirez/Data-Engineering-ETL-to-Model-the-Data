@@ -38,6 +38,8 @@ The code is in the file `Capstone Project Template.ipynb`, also it has a guide o
     - perform quality check operation 
     
 ### purpose of the final data model 
+The data model used is based on Star schema; in this case, the main reason is that it is easy to understand and navigate through the dimensions before building an analytical operation. Also, it allows referential integrity (in this case, it is logical because there are not an explicit constraint). Using dimension tables could help retrieve small datasets to evaluate and improve the query performance on clear join tables, performing operations as roll-up, cubes, or drill-down.
+
 The final data model is the following:
  ![dag](/images/datamodel.png)
  
@@ -52,7 +54,25 @@ The `country` dimension table contains global temperature by country; it is also
 
 The `US_city_demographic` dimension table has been performed a roll-up operation to get the race data and obtain the data at the city level (using state_code and city as table keys). We can even perform another roll-up (state level) to check the data against the immigration fact on this table.  The data dictionary has detailed information about each column
 (check the file `Capstone Project Template.ipynb`).
-    
+
+#### Tools and Technologies
+The data solution has been currently addressed using the following tools and Technologies:
+- **Apache spark**  allows us to scale up on larger amounts of data and work with different data formats 
+(in this case, SAS, Parquet, and CSV files). It also allows abstract the data access complexity and has flexibility on data manipulation as data frames and Spark SQL (both used during the project).
+
+    - **Spark Standalone**, currently we are handling more than three million records;
+however, it is not a problem to work on it locally (which was the current approach); 
+if the data start to increase, a different approach will be needed, like using a cloud solution. But due to the abstraction of the data access provided by spark, the access to a data warehouse based on a DMBS or a data lake will not be a big challenge to perform.
+
+- **Jupyter notebook**   It allows us to follow up the data pipeline and document it with the code. However, for a scheduled operation, using python scrips will be a better approach; in this case, it works for us for data exploration.
+
+    - **PySpark** is the Python API written in python to support Apache Spark and have its capabilities.
+
+    - **Pandas** It allows data manipulation; however, it has been used to show the data examples (initially, they are in spark data frames). It is more user-friendly to display the data than PySpark show data.
+
+**Apache parquet** The data's output is stored in parquet file format; this is useful because it is optimized to work with complex data. It allows having columnar storage that provides for efficient data compression and encoding types. Parquet file format also allows the partition of data to be accessible. This structure can also contain our data model based on the star schema. It can easily be exported to a data lake on an AWS S3 bucket or a data warehouse solution, for instance, using AWS Redshift.
+
+
 ### Explanation of the files in the repository
 1. [Capstone Project Template.ipynb](./Capstone Project Template.ipynb) jupyter notebook project with the ETL
 2. [us-cities-demographics.csv](./us-cities-demographics.csv) demographics dataset. This data comes from OpenSoft. You can read more about it [here](https://public.opendatasoft.com/explore/dataset/us-cities-demographics/export/).
@@ -67,8 +87,7 @@ The `US_city_demographic` dimension table has been performed a roll-up operation
 2. verify the Prerequisites
 3. Execute jupyter notebook `Capstone Project Template.ipynb` 
 
-### Conclusion
-The data solution has been currently addressed using Spark because it allows us to scale up on larger amounts of data and work with different data formats (in this case, SAS, Parquet, and CSV files). We are handling more than three million records; however, it is not a problem to work on it locally (which was the current approach); if the data start to increase, a different approach will be needed, like using a cloud solution. some other scenarios have been considered: 
+### What if scenarios 
 
 - **If the data was increased by 100x** We can consider improving the capacity of the spark cluster, using Amazon EMR and/or hosting EC2 instances (adding nodes) to get a horizontal scaling.  
 - **the pipelines would be run on a daily basis by 7 am every day** We can consider using Apache Airflow to schedule and monitor the pipelines using Directed Acyclic Graph (DAG) with a scheduled interval of daily. Airflow also has the flexibility to perform quality checks and retries.
